@@ -4,12 +4,17 @@ const towerYellow = document.querySelector('.tower-yellow');
 const rejouerDiv = document.querySelector('.rejouer');
 const retour = document.querySelector('.retour');
 const actualiser = document.querySelector('.actualiser');
+const redWin = document.querySelector('.red-win');
+const yellowWin = document.querySelector('.yellow-win');
 let arrayColonne = [];
 let arrayRond = [];
 let arrayEvent = [];
 let arrayRemove = [];
 let compteurClick = 0;
-
+let compteurWinRed = 0;
+let compteurWinYellow = 0;
+let interval;
+let compteurTimer = 20;
 
 for(let i = 0; i < 7; i++){
     const colonneDiv = document.createElement('div');
@@ -49,14 +54,29 @@ function animationPion (i, j, color) {
     }
 }
 
+function time() {
+    console.log(compteurTimer);
+    compteurTimer--;
+
+    if(compteurTimer == 0) {
+        clearInterval(interval);
+        if(compteurClick % 2 != 0) {
+            win(false, false, false, false, false, false, 'red');
+        } else {
+            win(false, false, false, false, false, false, 'yellow');
+        }
+    }
+}
+
 function ajoutClass(arrayColonne, i) {
     for(let j = 5; j >= 0; j--) {
         if(arrayColonne[i][j].classList.contains('red') == false && arrayColonne[i][j].classList.contains('yellow') == false){
+            time();
             if(compteurClick % 2 == 0) {
                 animationPion(i, j, 'red');
                 arrayColonne[i][j].classList.add('red');
                 towerRed.classList.add('hidden');
-                towerYellow.classList.remove('hidden');                
+                towerYellow.classList.remove('hidden');
             } else {
                 animationPion(i, j, 'yellow');
                 arrayColonne[i][j].classList.add('yellow');
@@ -96,11 +116,11 @@ function win (array, i, j, iplus, jplus, jmoin, color){
     towerRed.classList.add('hidden');
     towerYellow.classList.add('hidden');
     if(color == 'red') {
-        const redWin = document.querySelector('.red-win');
         redWin.classList.remove('hidden');
+        compteurWinRed++;
     } else {
-        const yellowWin = document.querySelector('.yellow-win');
         yellowWin.classList.remove('hidden');
+        compteurWinYellow++;
     }
 }
 
@@ -201,32 +221,42 @@ function retourPion () {
         towerRed.classList.add('hidden');
         towerYellow.classList.remove('hidden');
     }
-    
 }
 
 function actualiserPion() {
     for(let i = 0; i < arrayColonne.length; i++) {
         for(let j = 0; j < arrayColonne[i].length; j++) {
-            if(arrayColonne[i][j].classList.contains('red') || arrayColonne[i][j].classList.contains('yellow')) {
+            if(arrayColonne[i][j].classList.contains('red') || arrayColonne[i][j].classList.contains('yellow') || arrayColonne[i][j].classList.contains('rond-win-red') || arrayColonne[i][j].classList.contains('rond-win-yellow')) {
                 arrayColonne[i][j].classList.remove('red');
                 arrayColonne[i][j].classList.remove('yellow');
+                arrayColonne[i][j].classList.remove('rond-win-red');
+                arrayColonne[i][j].classList.remove('rond-win-yellow');
             }
         }
-        towerRed.classList.remove('hidden');
-        towerYellow.classList.add('hidden');
     }
+    redWin.classList.add('hidden');
+    yellowWin.classList.add('hidden');
+    towerRed.classList.remove('hidden');
+    towerYellow.classList.add('hidden');
+    compteurClick = 0;
 }
+
 
 for(let i = 0; i < arrayEvent.length; i++) {
     arrayEvent[i].addEventListener('click', function(){
         ajoutClass(arrayColonne, i);
         verificationWin(arrayColonne);
+        clearInterval(interval);
+        interval = setInterval(time, 1000);
+        compteurTimer = 20;
     })
 }
 
 retour.addEventListener('click', retourPion);
-actualiser.addEventListener('click', actualiserPion)
-    
-    rejouerDiv.addEventListener('click', function(){
-        location.reload();
-    })
+actualiser.addEventListener('click', actualiserPion);
+rejouerDiv.addEventListener('click', function(){
+    actualiserPion();
+    console.log(compteurWinRed);
+    console.log(compteurWinYellow);
+    rejouerDiv.classList.add('hidden');
+})
