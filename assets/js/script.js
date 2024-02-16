@@ -13,7 +13,8 @@ let arrayRemove = [];
 let compteurClick = 0;
 let compteurWinRed = 0;
 let compteurWinYellow = 0;
-
+let interval;
+let compteurTimer = 20;
 
 for(let i = 0; i < 7; i++){
     const colonneDiv = document.createElement('div');
@@ -54,11 +55,16 @@ function animationPion (i, j, color) {
 }
 
 function time() {
-    let chrono = 20;
-    for (let i = chrono; i >= 0; i--) {
-        setTimeout(function(){
-            console.log(i)
-        }, (chrono - i) * 1000)
+    console.log(compteurTimer);
+    compteurTimer--;
+
+    if(compteurTimer == 0) {
+        clearInterval(interval);
+        if(compteurClick % 2 != 0) {
+            win(false, false, false, false, false, false, 'red');
+        } else {
+            win(false, false, false, false, false, false, 'yellow');
+        }
     }
 }
 
@@ -70,7 +76,7 @@ function ajoutClass(arrayColonne, i) {
                 animationPion(i, j, 'red');
                 arrayColonne[i][j].classList.add('red');
                 towerRed.classList.add('hidden');
-                towerYellow.classList.remove('hidden');                
+                towerYellow.classList.remove('hidden');
             } else {
                 animationPion(i, j, 'yellow');
                 arrayColonne[i][j].classList.add('yellow');
@@ -215,7 +221,6 @@ function retourPion () {
         towerRed.classList.add('hidden');
         towerYellow.classList.remove('hidden');
     }
-    
 }
 
 function actualiserPion() {
@@ -236,10 +241,14 @@ function actualiserPion() {
     compteurClick = 0;
 }
 
+
 for(let i = 0; i < arrayEvent.length; i++) {
     arrayEvent[i].addEventListener('click', function(){
         ajoutClass(arrayColonne, i);
         verificationWin(arrayColonne);
+        clearInterval(interval);
+        interval = setInterval(time, 1000);
+        compteurTimer = 20;
     })
 }
 
@@ -249,4 +258,5 @@ rejouerDiv.addEventListener('click', function(){
     actualiserPion();
     console.log(compteurWinRed);
     console.log(compteurWinYellow);
-});
+    rejouerDiv.classList.add('hidden');
+})
