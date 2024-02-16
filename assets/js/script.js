@@ -4,6 +4,16 @@ const towerYellow = document.querySelector('.tower-yellow');
 const rejouerDiv = document.querySelector('.rejouer');
 const retour = document.querySelector('.retour');
 const actualiser = document.querySelector('.actualiser');
+const buttonPlayer = document.querySelector('.playervs');
+const menuWrapper = document.querySelector('.main-menu-wrapper')
+const gameWrapper = document.querySelector('.wrapper-game')
+const ruleWrapper = document.querySelector('.rules')
+const ruleMenu = document.querySelector('.rules-menu')
+const bottomLayer = document.querySelector('.bottom-layer')
+const compteurVictoireRouge = document.querySelector('.compteur-rouge')
+const compteurVictoireJaune = document.querySelector('.compteur-jaune')
+const compteurRouge = 0
+const compteurJaune = 0
 const redWin = document.querySelector('.red-win');
 const yellowWin = document.querySelector('.yellow-win');
 let arrayColonne = [];
@@ -115,11 +125,18 @@ function win (array, i, j, iplus, jplus, jmoin, color){
     rejouerDiv.classList.remove('hidden');
     towerRed.classList.add('hidden');
     towerYellow.classList.add('hidden');
+    bottomLayer.classList.remove('purple')
     if(color == 'red') {
         redWin.classList.remove('hidden');
+        bottomLayer.classList.add('red');
+        compteurRouge += 1;
+        compteurVictoireRouge.textContent = compteurRouge;
         compteurWinRed++;
     } else {
         yellowWin.classList.remove('hidden');
+        bottomLayer.classList.add('yellow');
+        compteurJaune += 1;
+        compteurVictoireJaune.textContent = compteurJaune
         compteurWinYellow++;
     }
 }
@@ -253,6 +270,25 @@ for(let i = 0; i < arrayEvent.length; i++) {
 }
 
 retour.addEventListener('click', retourPion);
+actualiser.addEventListener('click', actualiserPion)
+    
+    rejouerDiv.addEventListener('click', function(){
+        location.reload();
+    })
+
+    buttonPlayer.addEventListener('click', function() {
+        menuWrapper.classList.add('hidden');
+        gameWrapper.classList.remove('hidden')
+    })
+
+    ruleWrapper.addEventListener('click', function() {
+        menuWrapper.classList.add('hidden')
+        ruleMenu.classList.remove('hidden')
+    })
+
+    //bottomLayer.classList.add('yellow')
+    //bottomLayer.classList.remove('purple')
+    //bottomLayer.classList.add('red')  
 actualiser.addEventListener('click', actualiserPion);
 rejouerDiv.addEventListener('click', function(){
     actualiserPion();

@@ -1,35 +1,76 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
+    <title>Puissance 4</title>
     <link rel="stylesheet" href="assets/css/normalize.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
     <main>
-        <div class="wrapper-fleche">
-            <div class="retour">Retour</div>
-            <div class="actualiser">Recommencer</div>
+        <div class=" wrapper-game hidden">
+            <div class="count-red">Player 1
+                <div class="clear">
+                    <p class="compteur-rouge">0</p>
+                </div>
+            </div>
+            <div class="count-yellow">Player 2
+                <div class="clear">
+                    <p class="compteur-jaune">0</p>
+                </div>
+            </div>
+            <div class="wrapper-fleche">
+                <div class="retour">Retour</div>
+                <div class="actualiser">Recommencer</div>
+            </div>
+            <div class="tower-red">Aux rouges de jouer</div>
+            <div class="tower-yellow hidden">Aux jaunes de jouer</div>
+            <div class="red-win hidden">Les rouges ont gagné</div>
+            <div class="yellow-win hidden">Les jaune ont gagné</div>
+            <div class="contenaire"></div>
+            <div class="rejouer hidden">
+                <span>Player x
+                </span> <br>WINS
+                <p class="rejouer-button">Rejouer</p>
+            </div>
+            <div class="bottom-layer purple"></div>
         </div>
-        <div class="tower-red">Aux rouges de jouer</div>
-        <div class="tower-yellow hidden">Aux jaunes de jouer</div>
-        <div class="red-win hidden">Les rouges ont gagné</div>
-        <div class="yellow-win hidden">Les jaune ont gagné</div>
-        <div class="contenaire"></div>
-        <div class="rejouer hidden">Rejouer</div>
-        <div class="bottom-layer">
-            <div class="playervs">Joueur contre joueur</div>
-            <div class="clear"></div>
-            <div class="rules">Règles</div>
+        <div class="main-menu-wrapper">
+            <img class="logo" src="assets/img/logo.svg" alt="logo">
+            <div class="button-wrapper">
+                <div class="playervs">Joueur contre joueur
+                    <i class="fa-regular fa-face-smile"></i>
+                    <i class="fa-regular fa-face-smile emoji-two"></i>
+                </div>
+                <div class="clear"></div>
+                <div class="rules">Règles</div>
+            </div>
         </div>
-        <div class="time">20</div>
+        <div class="rules-menu hidden">
+            <img class="logo" src="assets/img/logo.svg" alt="logo">
+            <h1>
+                Les règles
+            </h1>
+            <p>
+                Le but du jeu est d'aligner une suite de 4 pions de même couleur sur une grille comptant 6 rangées et 7 colonnes.
+            </p>
+            <p> Chaque joueur dispose de 21 pions d'une couleur (par convention, en général jaune ou rouge). Tour à tour, les deux joueurs placent un pion dans la colonne de leur choix, le pion coulisse alors jusqu'à la position la plus basse possible dans ladite colonne à la suite de quoi c'est à l'adversaire de jouer.
+            </p>
+            <p> Le vainqueur est le joueur qui réalise le premier un alignement (horizontal, vertical ou diagonal) consécutif d'au moins quatre pions de sa couleur.
+            </p>
+            <p> Si, alors que toutes les cases de la grille de jeu sont remplies, aucun des deux joueurs n'a réalisé un tel alignement, la partie est déclarée nulle. 
+            </p>
+        </div>
+
     </main>
-    
+
     <script src="assets/js/script.js"></script>
-    <script src="assets/js/ai.js"></script>
+    <script src="https://kit.fontawesome.com/400fd5cf21.js" crossorigin="anonymous"></script>
 </body>
+
 </html>
