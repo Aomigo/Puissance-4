@@ -5,17 +5,17 @@ const rejouerDiv = document.querySelector('.rejouer');
 const retour = document.querySelector('.retour');
 const actualiser = document.querySelector('.actualiser');
 const buttonPlayer = document.querySelector('.playervs');
-const menuWrapper = document.querySelector('.main-menu-wrapper')
-const gameWrapper = document.querySelector('.wrapper-game')
-const ruleWrapper = document.querySelector('.rules')
-const ruleMenu = document.querySelector('.rules-menu')
-const bottomLayer = document.querySelector('.bottom-layer')
-const compteurVictoireRouge = document.querySelector('.compteur-rouge')
-const compteurVictoireJaune = document.querySelector('.compteur-jaune')
-const compteurRouge = 0
-const compteurJaune = 0
+const menuWrapper = document.querySelector('.main-menu-wrapper');
+const gameWrapper = document.querySelector('.wrapper-game');
+const ruleWrapper = document.querySelector('.rules');
+const ruleMenu = document.querySelector('.rules-menu');
+const bottomLayer = document.querySelector('.bottom-layer');
+const compteurVictoireRouge = document.querySelector('.compteur-rouge');
+const compteurVictoireJaune = document.querySelector('.compteur-jaune');
 const redWin = document.querySelector('.red-win');
 const yellowWin = document.querySelector('.yellow-win');
+const timerDiv = document.querySelector('.timer');
+const timerDeconteDiv = document.querySelector('.deconte-timer');
 let arrayColonne = [];
 let arrayRond = [];
 let arrayEvent = [];
@@ -59,16 +59,27 @@ function animationPion (i, j, color) {
             setTimeout(function(){
                 boxBGC.remove();
                 compteurAnimation++;
+                if(compteurAnimation == j - 1){
+                    if(compteurClick % 2 == 0) {
+                        arrayColonne[i][j].classList.add('yellow');
+                        towerRed.classList.remove('hidden');
+                        towerYellow.classList.add('hidden'); 
+                    } else {
+                        arrayColonne[i][j].classList.add('red');
+                        towerRed.classList.add('hidden');
+                        towerYellow.classList.remove('hidden');
+                    }
+                }
             }, 200)
         }, k * 70);
     }
 }
 
 function time() {
-    console.log(compteurTimer);
+    timerDeconteDiv.textContent = compteurTimer;
     compteurTimer--;
-
-    if(compteurTimer == 0) {
+    
+    if(compteurTimer == -1) {
         clearInterval(interval);
         if(compteurClick % 2 != 0) {
             win(false, false, false, false, false, false, 'red');
@@ -82,16 +93,11 @@ function ajoutClass(arrayColonne, i) {
     for(let j = 5; j >= 0; j--) {
         if(arrayColonne[i][j].classList.contains('red') == false && arrayColonne[i][j].classList.contains('yellow') == false){
             time();
+            console.log(i, j)
             if(compteurClick % 2 == 0) {
                 animationPion(i, j, 'red');
-                arrayColonne[i][j].classList.add('red');
-                towerRed.classList.add('hidden');
-                towerYellow.classList.remove('hidden');
             } else {
-                animationPion(i, j, 'yellow');
-                arrayColonne[i][j].classList.add('yellow');
-                towerRed.classList.remove('hidden');
-                towerYellow.classList.add('hidden'); 
+                animationPion(i, j, 'yellow')
             }
             arrayRemove.push(arrayColonne[i][j]);
             compteurClick++;
@@ -101,43 +107,46 @@ function ajoutClass(arrayColonne, i) {
 }
 
 function win (array, i, j, iplus, jplus, jmoin, color){
-    if(iplus == false && jplus == true && jmoin == false) {
+    if(!iplus && jplus && !jmoin) {
         array[i][j].classList.add('rond-win-' + color);
         array[i][j + 1].classList.add('rond-win-' + color);
         array[i][j + 2].classList.add('rond-win-' + color);
         array[i][j + 3].classList.add('rond-win-' + color);
-    } else if(iplus == true && jplus == false && jmoin == false){
+    } else if(iplus && !jplus && !jmoin){
         array[i][j].classList.add('rond-win-' + color);
         array[i + 1][j].classList.add('rond-win-' + color);
         array[i + 2][j].classList.add('rond-win-' + color);
         array[i + 3][j].classList.add('rond-win-' + color);
-    } else if(iplus == true && jplus == true && jmoin == false){
+    } else if(iplus && jplus && !jmoin){
         array[i][j].classList.add('rond-win-' + color);
         array[i + 1][j + 1].classList.add('rond-win-' + color);
         array[i + 2][j + 2].classList.add('rond-win-' + color);
         array[i + 3][j + 3].classList.add('rond-win-' + color);
-    } else if(iplus == true && jplus == false && jmoin == true){
+    } else if(iplus && !jplus && jmoin){
         array[i][j].classList.add('rond-win-' + color);
         array[i + 1][j - 1].classList.add('rond-win-' + color);
         array[i + 2][j - 2].classList.add('rond-win-' + color);
         array[i + 3][j - 3].classList.add('rond-win-' + color);
     }
+    
+    for (let i = 0; i < arrayEvent.length; i++) {
+        arrayEvent[i].removeEventListener('click', arrayEventHandlers[i]);
+    }
     rejouerDiv.classList.remove('hidden');
     towerRed.classList.add('hidden');
     towerYellow.classList.add('hidden');
-    bottomLayer.classList.remove('purple')
+    bottomLayer.classList.remove('purple');
+    timerDiv.classList.add('hidden');
     if(color == 'red') {
         redWin.classList.remove('hidden');
         bottomLayer.classList.add('red');
-        compteurRouge += 1;
-        compteurVictoireRouge.textContent = compteurRouge;
         compteurWinRed++;
+        compteurVictoireRouge.textContent = compteurWinRed;
     } else {
         yellowWin.classList.remove('hidden');
         bottomLayer.classList.add('yellow');
-        compteurJaune += 1;
-        compteurVictoireJaune.textContent = compteurJaune
         compteurWinYellow++;
+        compteurVictoireJaune.textContent = compteurWinYellow;
     }
 }
 
@@ -218,7 +227,15 @@ function verificationWin(array) {
                 win(array, i, j, true, false, true, "yellow");
             }
         }
-    }    
+    }
+    if(compteurClick == 42) {
+        rejouerDiv.classList.remove('hidden');
+        towerRed.classList.add('hidden');
+        towerYellow.classList.add('hidden');
+        timerDiv.classList.add('hidden');
+        const matchNulle = document.querySelector('.match-nulle');
+        matchNulle.classList.remove('hidden');
+    }
 }
 
 function retourPion () {
@@ -238,6 +255,7 @@ function retourPion () {
         towerRed.classList.add('hidden');
         towerYellow.classList.remove('hidden');
     }
+    compteurTimer = 20;
 }
 
 function actualiserPion() {
@@ -255,40 +273,39 @@ function actualiserPion() {
     yellowWin.classList.add('hidden');
     towerRed.classList.remove('hidden');
     towerYellow.classList.add('hidden');
+    timerDiv.classList.remove('hidden');
     compteurClick = 0;
+    compteurTimer = 20;
+    clearInterval(interval);
 }
 
 
+let arrayEventHandlers = [];
+
 for(let i = 0; i < arrayEvent.length; i++) {
-    arrayEvent[i].addEventListener('click', function(){
+    let eventHandler = function() {
         ajoutClass(arrayColonne, i);
         verificationWin(arrayColonne);
         clearInterval(interval);
         interval = setInterval(time, 1000);
         compteurTimer = 20;
-    })
+    }
+    arrayEventHandlers.push(eventHandler);
+    arrayEvent[i].addEventListener('click', eventHandler);
 }
 
+
 retour.addEventListener('click', retourPion);
-actualiser.addEventListener('click', actualiserPion)
-    
-    rejouerDiv.addEventListener('click', function(){
-        location.reload();
-    })
+buttonPlayer.addEventListener('click', function() {
+    menuWrapper.classList.add('hidden');
+    gameWrapper.classList.remove('hidden')
+})
 
-    buttonPlayer.addEventListener('click', function() {
-        menuWrapper.classList.add('hidden');
-        gameWrapper.classList.remove('hidden')
-    })
+ruleWrapper.addEventListener('click', function() {
+    menuWrapper.classList.add('hidden')
+    ruleMenu.classList.remove('hidden')
+})
 
-    ruleWrapper.addEventListener('click', function() {
-        menuWrapper.classList.add('hidden')
-        ruleMenu.classList.remove('hidden')
-    })
-
-    //bottomLayer.classList.add('yellow')
-    //bottomLayer.classList.remove('purple')
-    //bottomLayer.classList.add('red')  
 actualiser.addEventListener('click', actualiserPion);
 rejouerDiv.addEventListener('click', function(){
     actualiserPion();
