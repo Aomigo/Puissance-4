@@ -32,11 +32,16 @@ main {
     cursor: pointer;
 }
 
+.colonne:hover .box {
+    background-color: rgb(53, 53, 173);
+}
+
 .rules-menu {
     font-family: 'Protest Revolution', sans-serif;
 }
 
-.rejouer {
+.rejouer,
+.timer {
     font-size: 40px;
     background-color: white;
     color: black;
@@ -66,6 +71,16 @@ main {
     height: 20px;
     margin-left: 70px;
     padding-top: 5px;
+}
+
+.timer {
+    font-size: 30px;
+    background-color: #FFCE67;
+    cursor: auto;
+}
+
+.timer p {
+    margin: 0 0 20px;
 }
 
 .contenaire {
@@ -223,9 +238,6 @@ main {
     display: none;
 }
 
-/*@media screen and (min-width: 1024px) {
-    
-}*/
 
 /*Partie css*/
 main {
@@ -372,4 +384,20 @@ main {
     margin-right: 40px;
     font-size: 20px;
     margin-right: auto;
+}
+
+.colonne[data-columns="0"] .box[data-rows="0"] {
+    border-radius: 20px 0 0 0;
+}
+
+.colonne[data-columns="6"] .box[data-rows="0"] {
+    border-radius: 0 20px 0 0;
+}
+
+.colonne[data-columns="6"] .box[data-rows="5"] {
+    border-radius: 0 0 20px 0;
+}
+
+.colonne[data-columns="0"] .box[data-rows="5"] {
+    border-radius: 0 0 0 20px;
 }
