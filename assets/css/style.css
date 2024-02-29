@@ -322,3 +322,16 @@ main {
         background-color: rgb(41, 47, 139);
     }
 }
+
+.colonne[data-columns="0"] .box[data-rows="0"] {
+    border-radius: 20px 0 0 0;
+}
+.colonne[data-columns="6"] .box[data-rows="0"] {
+    border-radius: 0 20px 0 0;
+}
+.colonne[data-columns="6"] .box[data-rows="5"] {
+border-radius: 0 0 20px 0;
+}
+.colonne[data-columns="0"] .box[data-rows="5"] {
+    border-radius: 0 0 0 20px;
+}
