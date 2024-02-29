@@ -313,3 +313,12 @@ main {
     font-size: 20px;
     margin-right: auto;
 }
+
+.colonne {
+    cursor: pointer;
+}
+.colonne:hover {
+    .box {
+        background-color: rgb(41, 47, 139);
+    }
+}
