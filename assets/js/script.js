@@ -5,17 +5,19 @@ const rejouerDiv = document.querySelector('.rejouer');
 const retour = document.querySelector('.retour');
 const actualiser = document.querySelector('.actualiser');
 const buttonPlayer = document.querySelector('.playervs');
-const menuWrapper = document.querySelector('.main-menu-wrapper');
-const gameWrapper = document.querySelector('.wrapper-game');
-const ruleWrapper = document.querySelector('.rules');
-const ruleMenu = document.querySelector('.rules-menu');
-const bottomLayer = document.querySelector('.bottom-layer');
-const compteurVictoireRouge = document.querySelector('.compteur-rouge');
-const compteurVictoireJaune = document.querySelector('.compteur-jaune');
+const buttonPlayerRules = document.querySelector('.rulesButton')
+const menuWrapper = document.querySelector('.main-menu-wrapper')
+const gameWrapper = document.querySelector('.wrapper-game')
+const ruleWrapper = document.querySelector('.rules')
+const ruleMenu = document.querySelector('.rules-menu')
+const bottomLayer = document.querySelector('.bottom-layer')
+const compteurVictoireRouge = document.querySelector('.compteur-rouge')
+const compteurVictoireJaune = document.querySelector('.compteur-jaune')
 const redWin = document.querySelector('.red-win');
 const yellowWin = document.querySelector('.yellow-win');
 const timerDiv = document.querySelector('.timer');
 const timerDeconteDiv = document.querySelector('.deconte-timer');
+
 let arrayColonne = [];
 let arrayRond = [];
 let arrayEvent = [];
@@ -301,9 +303,15 @@ buttonPlayer.addEventListener('click', function() {
     gameWrapper.classList.remove('hidden')
 })
 
+
+buttonPlayerRules.addEventListener('click', function() {
+  ruleMenu.classList.add('hidden');
+  gameWrapper.classList.remove('hidden')
+})
+
 ruleWrapper.addEventListener('click', function() {
-    menuWrapper.classList.add('hidden')
-    ruleMenu.classList.remove('hidden')
+  menuWrapper.classList.add('hidden')
+  ruleMenu.classList.remove('hidden')
 })
 
 actualiser.addEventListener('click', actualiserPion);
