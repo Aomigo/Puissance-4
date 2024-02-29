@@ -5,6 +5,7 @@ const rejouerDiv = document.querySelector('.rejouer');
 const retour = document.querySelector('.retour');
 const actualiser = document.querySelector('.actualiser');
 const buttonPlayer = document.querySelector('.playervs');
+const buttonPlayerRules = document.querySelector('.rulesButton')
 const menuWrapper = document.querySelector('.main-menu-wrapper')
 const gameWrapper = document.querySelector('.wrapper-game')
 const ruleWrapper = document.querySelector('.rules')
@@ -278,6 +279,11 @@ actualiser.addEventListener('click', actualiserPion)
 
     buttonPlayer.addEventListener('click', function() {
         menuWrapper.classList.add('hidden');
+        gameWrapper.classList.remove('hidden')
+    })
+
+    buttonPlayerRules.addEventListener('click', function() {
+        ruleMenu.classList.add('hidden');
         gameWrapper.classList.remove('hidden')
     })
 
