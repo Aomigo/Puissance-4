@@ -44,6 +44,9 @@ for(let i = 0; i < 7; i++){
     }
     arrayColonne.push(arrayBox);
 }
+
+console.log('caca');
+
 function animationPion (i, j, color) {
     let compteurAnimation = 0;
     for(let k = 0; k < j; k++) {
